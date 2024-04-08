@@ -9,14 +9,16 @@
     /// </summary>
     public bool SequenceEqualIntegersQuery()
     {
-      bool value = false;
+      bool value;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 1, 2, 3, 4, 5 };
 
       // Write Query Syntax Here
-      
+      value = (from num in list1
+               select num)
+               .SequenceEqual(list2);
 
       return value;
     }
@@ -29,14 +31,14 @@
     /// </summary>
     public bool SequenceEqualIntegersMethod()
     {
-      bool value = false;
+      bool value;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 1, 2, 3, 4, 5 };
 
       // Write Method Syntax Here
-     
+      value = list1.SequenceEqual(list2);
 
       return value;
     }
@@ -48,7 +50,7 @@
     /// </summary>
     public bool SequenceEqualObjectsQuery()
     {
-      bool value = false;
+      bool value;
       // Create a list of products
       List<Product> list1 = new()
       {
@@ -66,7 +68,9 @@
       // list2 = list1;
 
       // Write Query Syntax Here
-      
+      value = (from prod in list1
+               select prod)
+                .SequenceEqual(list2);
 
       return value;
     }
@@ -78,7 +82,7 @@
     /// </summary>
     public bool SequenceEqualObjectsMethod()
     {
-      bool value = false;
+      bool value;
       // Create a list of products
       List<Product> list1 = new()
       {
@@ -96,7 +100,7 @@
       // list2 = list1;
 
       // Write Method Syntax Here
-      
+      value = list1.SequenceEqual(list2);
 
       return value;
     }
@@ -108,8 +112,8 @@
     /// </summary>
     public bool SequenceEqualUsingComparerQuery()
     {
-      bool value = false;
-      ProductComparer pc = new ProductComparer();
+      bool value;
+      ProductComparer pc = new();
       // Load all Product Data From Data Source 1
       List<Product> list1 = ProductRepository.GetAll();
       // Load all Product Data From Data Source 2
@@ -119,7 +123,9 @@
       //list1.RemoveAt(0);
 
       // Write Query Syntax Here
-      
+      value = (from prod in list1
+               select prod)
+               .SequenceEqual(list2, pc);
 
       return value;
     }
@@ -131,8 +137,8 @@
     /// </summary>
     public bool SequenceEqualUsingComparerMethod()
     {
-      bool value = false;
-      ProductComparer pc = new ProductComparer();
+      bool value;
+      ProductComparer pc = new();
       // Load all Product Data From Data Source 1
       List<Product> list1 = ProductRepository.GetAll();
       // Load all Product Data From Data Source 2
@@ -142,7 +148,7 @@
       //list1.RemoveAt(0);
 
       // Write Method Syntax Here
-      
+      value = list1.SequenceEqual(list2, pc);
 
       return value;
     }
@@ -154,14 +160,16 @@
     /// </summary>
     public List<int> ExceptIntegersQuery()
     {
-      List<int> list = null;
+      List<int> list;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 3, 4, 5 };
 
       // Write Query Syntax Here
-      
+      list = (from num in list1
+              select num)
+              .Except(list2).ToList();
 
       return list;
     }
@@ -173,14 +181,14 @@
     /// </summary>
     public List<int> ExceptIntegersMethod()
     {
-      List<int> list = null;
+      List<int> list;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 3, 4, 5 };
 
       // Write Method Syntax Here
-      
+      list = list1.Except(list2).ToList();
 
       return list;
     }
@@ -192,12 +200,14 @@
     /// </summary>
     public List<int> ExceptProductSalesQuery()
     {
-      List<int> list = null;
+      List<int> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod.ProductID)
+              .Except(from sale in sales select sale.ProductID).ToList();
 
       return list;
     }
@@ -209,12 +219,13 @@
     /// </summary>
     public List<int> ExceptProductSalesMethod()
     {
-      List<int> list = null;
+      List<int> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-
+      list = products.Select(prod => prod.ProductID)
+              .Except(sales.Select(sale => sale.ProductID)).ToList();
 
       return list;
     }
@@ -226,7 +237,7 @@
     /// </summary>
     public List<Product> ExceptUsingComparerQuery()
     {
-      List<Product> list = null;
+      List<Product> list;
       ProductComparer pc = new();
       // Load all Product Data From Data Source 1
       List<Product> list1 = ProductRepository.GetAll();
@@ -238,7 +249,9 @@
       list2.RemoveAll(prod => prod.Color == "Black");
 
       // Write Query Syntax Here
-      
+      list = (from prod in list1
+              select prod)
+              .Except(list2, pc).ToList();
 
       return list;
     }
@@ -250,7 +263,7 @@
     /// </summary>
     public List<Product> ExceptUsingComparerMethod()
     {
-      List<Product> list = null;
+      List<Product> list;
       ProductComparer pc = new();
       // Load all Product Data
       List<Product> list1 = ProductRepository.GetAll();
@@ -262,7 +275,7 @@
       list2.RemoveAll(prod => prod.Color == "Black");
 
       // Write Method Syntax Here
-      
+      list = list1.Except(list2, pc).ToList();
 
       return list;
     }
@@ -275,7 +288,7 @@
     /// </summary>
     public List<Product> ExceptByQuery()
     {
-      List<Product> list = null;
+      List<Product> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
 
@@ -283,7 +296,9 @@
       List<string> colors = new() { "Red", "Black" };
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod)
+              .ExceptBy(colors, p => p.Color).ToList();
 
       return list;
     }
@@ -296,7 +311,7 @@
     /// </summary>
     public List<Product> ExceptByMethod()
     {
-      List<Product> list = null;
+      List<Product> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
 
@@ -304,7 +319,7 @@
       List<string> colors = new() { "Red", "Black" };
 
       // Write Method Syntax Here
-      
+      list = products.ExceptBy(colors, p => p.Color).ToList();
 
       return list;
     }
@@ -317,12 +332,16 @@
     /// </summary>
     public List<Product> ExceptByProductSalesQuery()
     {
-      List<Product> list = null;
+      List<Product> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod)
+              .ExceptBy<Product, int>(
+                from sale in sales select sale.ProductID, 
+                prod => prod.ProductID).ToList();
 
       return list;
     }
@@ -335,12 +354,12 @@
     /// </summary>
     public List<Product> ExceptByProductSalesMethod()
     {
-      List<Product> list = null;
+      List<Product> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-
+      list = products.ExceptBy<Product, int>(sales.Select(s => s.ProductID), prod => prod.ProductID).ToList();
 
       return list;
     }
@@ -352,14 +371,16 @@
     /// </summary>
     public List<int> IntersectIntegersQuery()
     {
-      List<int> list = null;
+      List<int> list;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 3, 4, 5 };
 
       // Write Query Syntax Here
-      
+      list = (from num in list1
+              select num)
+              .Intersect(list2).ToList();
 
       return list;
     }
@@ -371,14 +392,14 @@
     /// </summary>
     public List<int> IntersectIntegersMethod()
     {
-      List<int> list = null;
+      List<int> list;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 3, 4, 5 };
 
       // Write Method Syntax Here
-      
+      list = list1.Intersect(list2).ToList();
 
       return list;
     }
@@ -390,12 +411,14 @@
     /// </summary>
     public List<int> IntersectProductSalesQuery()
     {
-      List<int> list = null;
+      List<int> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod.ProductID)
+              .Intersect(from sale in sales select sale.ProductID).ToList();
 
       return list;
     }
@@ -407,12 +430,13 @@
     /// </summary>
     public List<int> IntersectProductSalesMethod()
     {
-      List<int> list = null;
+      List<int> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-
+      list = products.Select(prod => prod.ProductID)
+              .Intersect(sales.Select(sale => sale.ProductID)).ToList();
 
       return list;
     }
@@ -424,7 +448,7 @@
     /// </summary>
     public List<Product> IntersectUsingComparerQuery()
     {
-      List<Product> list = null;
+      List<Product> list;
       ProductComparer pc = new();
       // Load all Product Data
       List<Product> list1 = ProductRepository.GetAll();
@@ -437,7 +461,9 @@
       list2.RemoveAll(prod => prod.Color == "Red");
 
       // Write Query Syntax Here
-     
+      list = (from prod in list1
+              select prod)
+              .Intersect(list2, pc).ToList();
 
       return list;
     }
@@ -449,7 +475,7 @@
     /// </summary>
     public List<Product> IntersectUsingComparerMethod()
     {
-      List<Product> list = null;
+      List<Product> list;
       ProductComparer pc = new();
       // Load all Product Data
       List<Product> list1 = ProductRepository.GetAll();
@@ -462,7 +488,7 @@
       list2.RemoveAll(prod => prod.Color == "Red");
 
       // Write Method Syntax Here
-      
+      list = list1.Intersect(list2, pc).ToList();
 
       return list;
     }
@@ -474,14 +500,16 @@
     /// </summary>
     public List<Product> IntersectByQuery()
     {
-      List<Product> list = null;
+      List<Product> list;
       List<Product> products = ProductRepository.GetAll();
 
       // The list of colors to locate in the list
       List<string> colors = new() { "Red", "Black" };
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod)
+              .IntersectBy(colors, p => p.Color).ToList();
 
       return list;
     }
@@ -493,14 +521,14 @@
     /// </summary>
     public List<Product> IntersectByMethod()
     {
-      List<Product> list = null;
+      List<Product> list;
       List<Product> products = ProductRepository.GetAll();
 
       // The list of colors to locate in the list
       List<string> colors = new() { "Red", "Black" };
 
       // Write Method Syntax Here
-      
+      list = products.IntersectBy(colors, p => p.Color).ToList();
 
       return list;
     }
@@ -513,12 +541,14 @@
     /// </summary>
     public List<Product> IntersectByProductSalesQuery()
     {
-      List<Product> list = null;
+      List<Product> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod)
+              .IntersectBy<Product, int>(from sale in sales select sale.ProductID, prod => prod.ProductID).ToList();
 
       return list;
     }
@@ -531,12 +561,12 @@
     /// </summary>
     public List<Product> IntersectByProductSalesMethod()
     {
-      List<Product> list = null;
+      List<Product> list;
       List<Product> products = ProductRepository.GetAll();
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-
+      list = products.IntersectBy<Product, int>(sales.Select(s => s.ProductID), prod => prod.ProductID).ToList();
 
       return list;
     }
