@@ -2,268 +2,422 @@
 {
   public class SamplesViewModel : ViewModelBase
   {
-    #region InnerJoinQuery
+    #region CountQuery
     /// <summary>
-    /// Join a Sales Order collection with Products into an anonymous class
-    /// NOTE: This is an equijoin or an inner join
+    /// Gets the total number of products in a collection
     /// </summary>
-    public List<ProductOrder> InnerJoinQuery()
+    public int CountQuery()
     {
-      List<ProductOrder> list;
+      int value = 0;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
+
+      // Write Query Syntax Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region CountMethod
+    /// <summary>
+    /// Gets the total number of products in a collection
+    /// </summary>
+    public int CountMethod()
+    {
+      int value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region CountFilteredQuery
+    /// <summary>
+    /// Can either add a where clause or a predicate in the Count() method
+    /// </summary>
+    public int CountFilteredQuery()
+    {
+      int value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax #1 Here
+      
+
+      // Write Query Syntax #2 Here
+     
+
+      return value;
+    }
+    #endregion
+
+    #region CountFilteredMethod
+    /// <summary>
+    /// Gets the total number of products in a collection
+    /// </summary>
+    public int CountFilteredMethod()
+    {
+      int value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax #1 Here
+      
+
+      // Write Method Syntax #2 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region MinQuery
+    /// <summary>
+    /// Get the minimum value of a single property in a collection
+    /// </summary>
+    public decimal MinQuery()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax #1 Here
+     
+
+      // Write Query Syntax #2 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region MinMethod
+    /// <summary>
+    /// Get the minimum value of a single property in a collection
+    /// </summary>
+    public decimal MinMethod()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax #1 Here
+      
+
+      // Write Method Syntax #2 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region MaxQuery
+    /// <summary>
+    /// Get the maximum value of a single property in a collection
+    /// </summary>
+    public decimal MaxQuery()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax #1 Here
+      
+
+      // Write Query Syntax #2 Here
+     
+
+      return value;
+    }
+    #endregion
+
+    #region MaxMethod
+    /// <summary>
+    /// Get the maximum value of a single property in a collection
+    /// </summary>
+    public decimal MaxMethod()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax #1 Here
+      
+
+      // Write Method Syntax #2 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region MinByQuery
+    /// <summary>
+    /// Get the minimum value of a single property in a collection, but return the object
+    /// </summary>
+    public Product MinByQuery()
+    {
+      Product product = null;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax Here
+      
+
+      return product;
+    }
+    #endregion
+
+    #region MinByMethod
+    /// <summary>
+    /// Get the minimum value of a single property in a collection, but return the object
+    /// </summary>
+    public Product MinByMethod()
+    {
+      Product product = null;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax Here
+      
+
+      return product;
+    }
+    #endregion
+
+    #region MaxByQuery
+    /// <summary>
+    /// Get the maximum value of a single property in a collection, but return the object
+    /// </summary>
+    public Product MaxByQuery()
+    {
+      Product product = null;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax Here
+      
+
+      return product;
+    }
+    #endregion
+
+    #region MaxByMethod
+    /// <summary>
+    /// Get the maximum value of a single property in a collection, but return the object
+    /// </summary>
+    public Product MaxByMethod()
+    {
+      Product product = null;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax Here
+     
+
+      return product;
+    }
+    #endregion
+
+    #region AverageQuery
+    /// <summary>
+    /// Get the average of all values within a single property in a collection
+    /// </summary>
+    public decimal AverageQuery()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax #1 Here
+      
+
+      // Write Query Syntax #2 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region AverageMethod
+    /// <summary>
+    /// Get the average of all values within a single property in a collection
+    /// </summary>
+    public decimal AverageMethod()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax #1 Here
+      
+
+      // Write Method Syntax #2 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region SumQuery
+    /// <summary>
+    /// Gets the sum of the values of a single property in a collection
+    /// </summary>
+    public decimal SumQuery()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax #1 Here
+      
+
+      // Write Query Syntax #2 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region SumMethod
+    /// <summary>
+    /// Gets the sum of the values of a single property in a collection
+    /// </summary>
+    public decimal SumMethod()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax #1 Here
+      
+
+      // Write Method Syntax #1 Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region AggregateQuery
+    /// <summary>
+    /// Aggregate allows you to iterate over a collection and perform an accumulation of values. With this operator you can simulate count, sum, etc.
+    /// </summary>
+    public decimal AggregateQuery()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Query Syntax Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region AggregateMethod
+    /// <summary>
+    /// Aggregate allows you to iterate over a collection and perform an accumulation of values. With this operator you can simulate count, sum, etc.
+    /// </summary>
+    public decimal AggregateMethod()
+    {
+      decimal value = 0;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region AggregateCustomQuery
+    /// <summary>
+    /// Use Sales Orders and calculate the total Sales by multiplying OrderQty * UnitPrice for each order
+    /// </summary>
+    public decimal AggregateCustomQuery()
+    {
+      decimal value = 0;
+      // Load all Sales Data
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      list = (from prod in products
-              join sale in sales
-              on prod.ProductID equals sale.ProductID
-              select new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      
 
-      return list;
+      return value;
     }
     #endregion
 
-    #region InnerJoinMethod
+    #region AggregateCustomMethod
     /// <summary>
-    /// Join a Sales Order collection with Products into anonymous class
-    /// NOTE: This is an equijoin or an inner join
+    /// Use Sales Orders and calculate the total Sales by multiplying OrderQty * UnitPrice for each order
     /// </summary>
-    public List<ProductOrder> InnerJoinMethod()
+    public decimal AggregateCustomMethod()
     {
-      List<ProductOrder> list;
-      // Load all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
+      decimal value = 0;
+      // Load all Sales Data
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      list = products.Join(sales, prod => prod.ProductID,
-              sale => sale.ProductID,
-              (prod, sale) => new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      
 
-      return list;
+      return value;
     }
     #endregion
 
-    #region InnerJoinTwoFieldsQuery
+    #region AggregateUsingGroupByQuery
     /// <summary>
-    /// Join a Sales Order collection with Products collection using two fields
+    /// Group products by Size property and calculate min/max/average prices
     /// </summary>
-    public List<ProductOrder> InnerJoinTwoFieldsQuery()
+    public List<ProductStats> AggregateUsingGroupByQuery()
     {
-      List<ProductOrder> list;
-      // Load all Product Data
+      List<ProductStats> list = null;
+      // Load all Sales Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      list = (from prod in products
-              join sale in sales on
-                new { prod.ProductID, Qty = (short)6 }
-                  equals
-                new { sale.ProductID, Qty = sale.OrderQty }
-              select new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      
 
       return list;
     }
     #endregion
 
-    #region InnerJoinTwoFieldsMethod
+    #region AggregateUsingGroupByMethod
     /// <summary>
-    /// Join a Sales Order collection with Products collection using two fields
+    /// Group products by Size property and calculate min/max/average prices
     /// </summary>
-    public List<ProductOrder> InnerJoinTwoFieldsMethod()
+    public List<ProductStats> AggregateUsingGroupByMethod()
     {
-      List<ProductOrder> list;
-      // Load all Product Data
+      List<ProductStats> list = null;
+      // Load all Sales Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      list = products.Join(sales,
-              prod => new { prod.ProductID, Qty = (short)6 },
-              sale => new { sale.ProductID, Qty = sale.OrderQty },
-              (prod, sale) => new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      
 
       return list;
     }
     #endregion
 
-    #region JoinIntoQuery
+    #region AggregateMoreEfficientMethod
     /// <summary>
-    /// Use 'into' to create a new object with a Sales collection for each Product
-    /// This is like a combination of an inner join and left outer join
-    /// The 'into' keyword allows you to put the sales into a 'sales' variable 
-    /// that can be used to retrieve all sales for a specific product
+    /// Use Aggregate with some custom methods to gather the data in one pass 
     /// </summary>
-    public List<ProductSales> JoinIntoQuery()
+    public List<ProductStats> AggregateMoreEfficientMethod()
     {
-      List<ProductSales> list;
-      // Load all Product Data
+      List<ProductStats> list = null;
+      // Load all Sales Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              orderby prod.ProductID
-              join sale in sales
-              on prod.ProductID equals sale.ProductID
-              into newSales
-              select new ProductSales
-              {
-                Product = prod,
-                Sales = newSales.OrderBy(s => s.SalesOrderID).ToList()
-              }).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region JoinIntoMethod
-    /// <summary>
-    /// Use 'into' to create a new object with a Sales collection for each Product
-    /// This is like a combination of an inner join and left outer join
-    /// The GroupJoin() method replaces the into keyword
-    /// </summary>
-    public List<ProductSales> JoinIntoMethod()
-    {
-      List<ProductSales> list;
-      // Load all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      list = products.OrderBy(p => p.ProductID).GroupJoin(sales,
-              prod => prod.ProductID,
-              sale => sale.ProductID,
-              (prod, newSales) => new ProductSales
-              {
-                Product = prod,
-                Sales = newSales.OrderBy(s => s.SalesOrderID).ToList()
-              }).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region LeftOuterJoinQuery
-    /// <summary>
-    /// Perform a left join between Products and Sales using DefaultIfEmpty()
-    /// </summary>
-    public List<ProductOrder> LeftOuterJoinQuery()
-    {
-      List<ProductOrder> list;
-      // Load all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              join sale in sales
-              on prod.ProductID equals sale.ProductID
-                into newSales
-              from sale in newSales.DefaultIfEmpty()
-              select new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale?.SalesOrderID,
-                OrderQty = sale?.OrderQty,  // Use the null-conditional operator
-                UnitPrice = sale?.UnitPrice,
-                LineTotal = sale?.LineTotal
-              }).OrderBy(p => p.Name).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region LeftOuterJoinMethod
-    /// <summary>
-    /// Perform a left join between Products and Sales using DefaultIfEmpty() and SelectMany()
-    /// </summary>
-    public List<ProductOrder> LeftOuterJoinMethod()
-    {
-      List<ProductOrder> list;
-      // Load all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Method Syntax Here
-      list = products.SelectMany(
-              prod => sales.Where(s => s.ProductID == prod.ProductID).DefaultIfEmpty(),
-              (prod, sale) => new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale?.SalesOrderID,  // Use the null-conditional operator
-                OrderQty = sale?.OrderQty,
-                UnitPrice = sale?.UnitPrice,
-                LineTotal = sale?.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      
 
       return list;
     }
