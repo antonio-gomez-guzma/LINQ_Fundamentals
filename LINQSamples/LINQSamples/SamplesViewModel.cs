@@ -9,13 +9,12 @@
     public List<Product> TakeQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Query Syntax Here
       list = (from prod in products
               orderby prod.Name
               select prod).Take(5).ToList();
-      
 
       return list;
     }
@@ -28,11 +27,10 @@
     public List<Product> TakeMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Query Syntax Here
-      list = products.OrderBy(p => p.Name).Take(5).ToList();
-     
+      list = products.OrderBy(prod => prod.Name).Take(5).ToList();
 
       return list;
     }
@@ -45,14 +43,14 @@
     public List<Product> TakeRangeQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
-            // Write Query Syntax Here
-            list = (from prod in products
-                    orderby prod.Name
-                    select prod).Take(5..8).ToList();
+      // Write Query Syntax Here
+      list = (from prod in products
+              orderby prod.Name
+              select prod).Take(5..8).ToList();
 
-            return list;
+      return list;
     }
     #endregion
 
@@ -63,13 +61,12 @@
     public List<Product> TakeRangeMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
-            // Write Query Syntax Here
-            list = products.OrderBy(p => p.Name).Take(5..8).ToList();
+      // Write Query Syntax Here
+      list = products.OrderBy(prod => prod.Name).Take(5..8).ToList();
 
-
-            return list;
+      return list;
     }
     #endregion
 
@@ -80,10 +77,12 @@
     public List<Product> TakeWhileQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              orderby prod.Name
+              select prod).TakeWhile(prod => prod.Name.StartsWith("A")).ToList();
 
       return list;
     }
@@ -96,10 +95,11 @@
     public List<Product> TakeWhileMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Method Syntax Here
-     
+      list = products.OrderBy(prod => prod.Name)
+                      .TakeWhile(prod => prod.Name.StartsWith("A")).ToList();
 
       return list;
     }
@@ -112,10 +112,12 @@
     public List<Product> SkipQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              orderby prod.Name
+              select prod).Skip(30).ToList();
 
       return list;
     }
@@ -128,10 +130,10 @@
     public List<Product> SkipMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Method Syntax Here
-      
+      list = products.OrderBy(prod => prod.Name).Skip(30).ToList();
 
       return list;
     }
@@ -144,10 +146,12 @@
     public List<Product> SkipWhileQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              orderby prod.Name
+              select prod).SkipWhile(prod => prod.Name.StartsWith("A")).ToList();
 
       return list;
     }
@@ -160,10 +164,11 @@
     public List<Product> SkipWhileMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Method Syntax Here
-     
+      list = products.OrderBy(prod => prod.Name)
+        .SkipWhile(prod => prod.Name.StartsWith("A")).ToList();
 
       return list;
     }
@@ -177,10 +182,12 @@
     public List<string> DistinctQuery()
     {
       List<Product> products = GetProducts();
-      List<string> list = new();
+      List<string> list;
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod.Color)
+              .Distinct().OrderBy(c => c).ToList();
 
       return list;
     }
@@ -194,36 +201,48 @@
     public List<string> DistinctWhere()
     {
       List<Product> products = GetProducts();
-      List<string> list = new();
+      List<string> list;
 
       // Write Method Syntax Here
-      
+      list = products.Select(p => p.Color).Distinct().OrderBy(c => c).ToList();
 
       return list;
     }
     #endregion
 
     #region DistinctByQuery
+    /// <summary>
+    /// The DistinctBy() operator finds all unique values within a collection using a property.
+    /// It returns a collection of Product objects
+    /// </summary>
     public List<Product> DistinctByQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Query Syntax Here
-
+      list = (from prod in products
+              select prod)
+              .DistinctBy(prod => prod.Color)
+              .OrderBy(p => p.Color).ToList();
 
       return list;
     }
     #endregion
 
     #region DistinctByMethod
+    /// <summary>
+    /// The DistinctBy() operator finds all unique values within a collection using a property.
+    /// It returns a collection of Product objects
+    /// </summary>
     public List<Product> DistinctByMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      List<Product> list;
 
       // Write Method Syntax Here
-
+      list = products.DistinctBy(prod => prod.Color, default)
+                      .OrderBy(p => p.Color).ToList();
 
       return list;
     }
@@ -236,10 +255,11 @@
     public List<Product[]> ChunkQuery()
     {
       List<Product> products = GetProducts();
-      List<Product[]> list = new();
+      List<Product[]> list;
 
       // Write Query Syntax Here
-      
+      list = (from prod in products
+              select prod).Chunk(5).ToList();
 
       return list;
     }
@@ -252,10 +272,10 @@
     public List<Product[]> ChunkMethod()
     {
       List<Product> products = GetProducts();
-      List<Product[]> list = new();
+      List<Product[]> list;
 
       // Write Method Syntax Here
-      
+      list = products.Chunk(5).ToList();
 
       return list;
     }
