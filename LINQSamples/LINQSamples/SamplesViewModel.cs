@@ -47,10 +47,12 @@
       List<Product> products = GetProducts();
       List<Product> list = new();
 
-      // Write Query Syntax Here
+            // Write Query Syntax Here
+            list = (from prod in products
+                    orderby prod.Name
+                    select prod).Take(5..8).ToList();
 
-     
-      return list;
+            return list;
     }
     #endregion
 
@@ -63,10 +65,11 @@
       List<Product> products = GetProducts();
       List<Product> list = new();
 
-      // Write Query Syntax Here
-      
+            // Write Query Syntax Here
+            list = products.OrderBy(p => p.Name).Take(5..8).ToList();
 
-      return list;
+
+            return list;
     }
     #endregion
 
