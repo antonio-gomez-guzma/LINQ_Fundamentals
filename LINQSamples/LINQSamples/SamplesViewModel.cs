@@ -11,7 +11,9 @@
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      
+      (from sale in sales
+       let tmp = sale.LineTotal = sale.OrderQty * sale.UnitPrice
+       select sale).ToList();
 
       return sales;
     }
@@ -27,7 +29,7 @@
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      
+      sales.ForEach(sale => sale.LineTotal = sale.OrderQty * sale.UnitPrice);
 
       return sales;
     }
@@ -44,7 +46,10 @@
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      
+      (from prod in products
+       let tmp = prod.TotalSales =
+         sales.Where(sale => sale.ProductID == prod.ProductID).Sum(sale => sale.LineTotal)
+       select prod).ToList();
 
       return products;
     }
@@ -61,7 +66,8 @@
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-     
+      products.ForEach(p => p.TotalSales = sales.Where(sale => sale.ProductID == p.ProductID)
+                  .Sum(sale => sale.LineTotal));
 
       return products;
     }
@@ -81,11 +87,13 @@
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
-      
+      var list = (from prod in products
+                  let tmp = prod.TotalSales = CalculateTotalSalesForProduct(prod, sales)      
+                  select prod);
 
-      
+       list = list.Where(prod => prod.TotalSales > 0);
 
-      return null;
+      return list.ToList();
     }
     #endregion
 
@@ -115,7 +123,8 @@
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-     
+      products.ForEach(p => p.TotalSales = CalculateTotalSalesForProduct(p, sales));
+      products = products.Where(p => p.TotalSales > 0).ToList();
 
       return products;
     }
