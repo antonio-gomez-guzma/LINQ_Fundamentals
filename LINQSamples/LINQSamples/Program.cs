@@ -4,7 +4,7 @@
 SamplesViewModel vm = new();
 
 // Call Sample Method
-var result = vm.FirstOrDefaultQuery();
+var result = vm.TakeRangeQuery();
 
 // Display Results
 vm.Display(result);
