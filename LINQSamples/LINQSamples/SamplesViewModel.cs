@@ -2,266 +2,80 @@
 {
   public class SamplesViewModel : ViewModelBase
   {
-    #region SequenceEqualIntegersQuery
+    #region UnionIntegersQuery
     /// <summary>
-    /// SequenceEqual() compares two different collections to see if they are equal
-    /// When using simple data types such as int, string, a direct comparison between values is performed
+    /// Union() combines two lists together, but skips duplicates
+    /// This is like the UNION SQL operator
     /// </summary>
-    public bool SequenceEqualIntegersQuery()
+    public List<int> UnionIntegersQuery()
     {
-      bool value;
+      List<int> list;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 1, 2, 3, 4, 5 };
 
       // Write Query Syntax Here
-      value = (from num in list1
-               select num)
-               .SequenceEqual(list2);
+      list = (from num in list1
+              select num)
+              .Union(list2)
+              .OrderBy(num => num).ToList();
 
-      return value;
+      return list;
     }
     #endregion
 
-    #region SequenceEqualIntegersMethod
+    #region UnionIntegersMethod
     /// <summary>
-    /// SequenceEqual() compares two different collections to see if they are equal
-    /// When using simple data types such as int, string, a direct comparison between values is performed
+    /// Union() combines two lists together, but skips duplicates
+    /// This is like the UNION SQL operator
     /// </summary>
-    public bool SequenceEqualIntegersMethod()
+    public List<int> UnionIntegersMethod()
     {
-      bool value;
+      List<int> list;
       // Create a list of numbers
       List<int> list1 = new() { 5, 2, 3, 4, 5 };
       // Create a list of numbers
       List<int> list2 = new() { 1, 2, 3, 4, 5 };
 
-      // Write Method Syntax Here
-      value = list1.SequenceEqual(list2);
-
-      return value;
-    }
-    #endregion
-
-    #region SequenceEqualObjectsQuery
-    /// <summary>
-    /// When using a collection of objects, SequenceEqual() performs a comparison to see if the two object references point to the same object
-    /// </summary>
-    public bool SequenceEqualObjectsQuery()
-    {
-      bool value;
-      // Create a list of products
-      List<Product> list1 = new()
-      {
-        new Product { ProductID = 1, Name = "Product 1" },
-        new Product { ProductID = 2, Name = "Product 2" },
-      };
-      // Create a list of products
-      List<Product> list2 = new()
-      {
-        new Product { ProductID = 1, Name = "Product 1" },
-        new Product { ProductID = 2, Name = "Product 2" },
-      };
-
-      // Make Collections the Same
-      // list2 = list1;
-
       // Write Query Syntax Here
-      value = (from prod in list1
-               select prod)
-                .SequenceEqual(list2);
-
-      return value;
-    }
-    #endregion
-
-    #region SequenceEqualObjectsMethod
-    /// <summary>
-    /// When using a collection of objects, SequenceEqual() performs a comparison to see if the two object references point to the same object
-    /// </summary>
-    public bool SequenceEqualObjectsMethod()
-    {
-      bool value;
-      // Create a list of products
-      List<Product> list1 = new()
-      {
-        new Product { ProductID = 1, Name = "Product 1" },
-        new Product { ProductID = 2, Name = "Product 2" },
-      };
-      // Create a list of products
-      List<Product> list2 = new()
-      {
-        new Product { ProductID = 1, Name = "Product 1" },
-        new Product { ProductID = 2, Name = "Product 2" },
-      };
-
-      // Make Collections the Same
-      // list2 = list1;
-
-      // Write Method Syntax Here
-      value = list1.SequenceEqual(list2);
-
-      return value;
-    }
-    #endregion
-
-    #region SequenceEqualUsingComparerQuery
-    /// <summary>
-    /// Use an EqualityComparer class to determine if the objects are the same based on the values in properties
-    /// </summary>
-    public bool SequenceEqualUsingComparerQuery()
-    {
-      bool value;
-      ProductComparer pc = new();
-      // Load all Product Data From Data Source 1
-      List<Product> list1 = ProductRepository.GetAll();
-      // Load all Product Data From Data Source 2
-      List<Product> list2 = ProductRepository.GetAll();
-
-      // Remove an element from 'list1' to make the collections different
-      //list1.RemoveAt(0);
-
-      // Write Query Syntax Here
-      value = (from prod in list1
-               select prod)
-               .SequenceEqual(list2, pc);
-
-      return value;
-    }
-    #endregion
-
-    #region SequenceEqualUsingComparerMethod
-    /// <summary>
-    /// Use an EqualityComparer class to determine if the objects are the same based on the values in properties
-    /// </summary>
-    public bool SequenceEqualUsingComparerMethod()
-    {
-      bool value;
-      ProductComparer pc = new();
-      // Load all Product Data From Data Source 1
-      List<Product> list1 = ProductRepository.GetAll();
-      // Load all Product Data From Data Source 2
-      List<Product> list2 = ProductRepository.GetAll();
-
-      // Remove an element from 'list1' to make the collections different
-      //list1.RemoveAt(0);
-
-      // Write Method Syntax Here
-      value = list1.SequenceEqual(list2, pc);
-
-      return value;
-    }
-    #endregion
-
-    #region ExceptIntegersQuery
-    /// <summary>
-    /// Find all values in one list that are not in the other list
-    /// </summary>
-    public List<int> ExceptIntegersQuery()
-    {
-      List<int> list;
-      // Create a list of numbers
-      List<int> list1 = new() { 5, 2, 3, 4, 5 };
-      // Create a list of numbers
-      List<int> list2 = new() { 3, 4, 5 };
-
-      // Write Query Syntax Here
-      list = (from num in list1
-              select num)
-              .Except(list2).ToList();
+      list = list1.Union(list2)
+              .OrderBy(num => num).ToList();
 
       return list;
     }
     #endregion
 
-    #region ExceptIntegersMethod
+    #region UnionQuery
     /// <summary>
-    /// Find all values in one list that are not in the other list
+    /// Union() combines two lists together, but skips duplicates by using a comparer class
+    /// This is like the UNION SQL operator
     /// </summary>
-    public List<int> ExceptIntegersMethod()
-    {
-      List<int> list;
-      // Create a list of numbers
-      List<int> list1 = new() { 5, 2, 3, 4, 5 };
-      // Create a list of numbers
-      List<int> list2 = new() { 3, 4, 5 };
-
-      // Write Method Syntax Here
-      list = list1.Except(list2).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region ExceptProductSalesQuery
-    /// <summary>
-    /// Find all products that do not have sales
-    /// </summary>
-    public List<int> ExceptProductSalesQuery()
-    {
-      List<int> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              select prod.ProductID)
-              .Except(from sale in sales select sale.ProductID).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region ExceptProductSalesMethod
-    /// <summary>
-    /// Find all products that do not have sales
-    /// </summary>
-    public List<int> ExceptProductSalesMethod()
-    {
-      List<int> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Method Syntax Here
-      list = products.Select(prod => prod.ProductID)
-              .Except(sales.Select(sale => sale.ProductID)).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region ExceptUsingComparerQuery
-    /// <summary>
-    /// Find all products that are in one list but not the other using a comparer class
-    /// </summary>
-    public List<Product> ExceptUsingComparerQuery()
+    public List<Product> UnionQuery()
     {
       List<Product> list;
       ProductComparer pc = new();
-      // Load all Product Data From Data Source 1
+      // Load all Product Data
       List<Product> list1 = ProductRepository.GetAll();
-      // Load all Product Data From Data Source 2
+      // Load all Product Data
       List<Product> list2 = ProductRepository.GetAll();
-
-      // Remove all products with color = "Black" from 'list2'
-      // to give us a difference in the two lists
-      list2.RemoveAll(prod => prod.Color == "Black");
 
       // Write Query Syntax Here
       list = (from prod in list1
               select prod)
-              .Except(list2, pc).ToList();
+              .Union(list2, pc)
+              .OrderBy(p => p.Name).ToList();
 
       return list;
     }
     #endregion
 
-    #region ExceptUsingComparerMethod
+    #region UnionMethod
     /// <summary>
-    /// Find all products that are in one list but not the other using a comparer class
+    /// Union() combines two lists together, but skips duplicates by using a comparer class
+    /// This is like the UNION SQL operator
     /// </summary>
-    public List<Product> ExceptUsingComparerMethod()
+    public List<Product> UnionMethod()
     {
       List<Product> list;
       ProductComparer pc = new();
@@ -270,305 +84,138 @@
       // Load all Product Data
       List<Product> list2 = ProductRepository.GetAll();
 
-      // Remove all products with color = "Black" from 'list2'
-      // to give us a difference in the two lists
-      list2.RemoveAll(prod => prod.Color == "Black");
-
       // Write Method Syntax Here
-      list = list1.Except(list2, pc).ToList();
+      list = list1.Union(list2, pc).OrderBy(p => p.Name).ToList();
 
       return list;
     }
     #endregion
 
-    #region ExceptByQuery
+    #region UnionByQuery
     /// <summary>
-    /// ExceptBy() finds products within a collection that DO NOT compare to a List<string> against a specified property in the collection.
-    /// The default comparer for ExceptBy() is 'string'
+    /// UnionBy() combines two lists together using DISTINCT on the property specified. 
     /// </summary>
-    public List<Product> ExceptByQuery()
+    public List<Product> UnionByQuery()
     {
       List<Product> list;
-      // Load all Product Data
-      List<Product> products = ProductRepository.GetAll();
-
-      // The list of colors to exclude from the list
-      List<string> colors = new() { "Red", "Black" };
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              select prod)
-              .ExceptBy(colors, p => p.Color).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region ExceptByMethod
-    /// <summary>
-    /// ExceptBy() finds products within a collection that DO NOT compare to a List<string> against a specified property in the collection.
-    /// The default comparer for ExceptBy() is 'string'
-    /// </summary>
-    public List<Product> ExceptByMethod()
-    {
-      List<Product> list;
-      // Load all Product Data
-      List<Product> products = ProductRepository.GetAll();
-
-      // The list of colors to exclude from the list
-      List<string> colors = new() { "Red", "Black" };
-
-      // Write Method Syntax Here
-      list = products.ExceptBy(colors, p => p.Color).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region ExceptByProductSalesQuery
-    /// <summary>
-    /// Find all products that do not have sales
-    /// Change the default comparer for ExceptBy()
-    /// </summary>
-    public List<Product> ExceptByProductSalesQuery()
-    {
-      List<Product> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              select prod)
-              .ExceptBy<Product, int>(
-                from sale in sales select sale.ProductID, 
-                prod => prod.ProductID).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region ExceptByProductSalesMethod
-    /// <summary>
-    /// Find all products that do not have sales
-    /// Change the default comparer for ExceptBy()
-    /// </summary>
-    public List<Product> ExceptByProductSalesMethod()
-    {
-      List<Product> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Method Syntax Here
-      list = products.ExceptBy<Product, int>(sales.Select(s => s.ProductID), prod => prod.ProductID).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region IntersectIntegersQuery
-    /// <summary>
-    /// Intersect() finds all values in one list that are also in the other list
-    /// </summary>
-    public List<int> IntersectIntegersQuery()
-    {
-      List<int> list;
-      // Create a list of numbers
-      List<int> list1 = new() { 5, 2, 3, 4, 5 };
-      // Create a list of numbers
-      List<int> list2 = new() { 3, 4, 5 };
-
-      // Write Query Syntax Here
-      list = (from num in list1
-              select num)
-              .Intersect(list2).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region IntersectIntegersMethod
-    /// <summary>
-    /// Intersect() finds all values in one list that are also in the other list
-    /// </summary>
-    public List<int> IntersectIntegersMethod()
-    {
-      List<int> list;
-      // Create a list of numbers
-      List<int> list1 = new() { 5, 2, 3, 4, 5 };
-      // Create a list of numbers
-      List<int> list2 = new() { 3, 4, 5 };
-
-      // Write Method Syntax Here
-      list = list1.Intersect(list2).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region IntersectProductSalesQuery
-    /// <summary>
-    /// Find all products that have sales
-    /// </summary>
-    public List<int> IntersectProductSalesQuery()
-    {
-      List<int> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              select prod.ProductID)
-              .Intersect(from sale in sales select sale.ProductID).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region IntersectProductSalesMethod
-    /// <summary>
-    /// Find all products that have sales
-    /// </summary>
-    public List<int> IntersectProductSalesMethod()
-    {
-      List<int> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
-
-      // Write Method Syntax Here
-      list = products.Select(prod => prod.ProductID)
-              .Intersect(sales.Select(sale => sale.ProductID)).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region IntersectUsingComparerQuery
-    /// <summary>
-    /// Intersect() finds all products that are in common between two collections using a comparer class
-    /// </summary>
-    public List<Product> IntersectUsingComparerQuery()
-    {
-      List<Product> list;
-      ProductComparer pc = new();
       // Load all Product Data
       List<Product> list1 = ProductRepository.GetAll();
       // Load all Product Data
       List<Product> list2 = ProductRepository.GetAll();
-
-      // Remove 'black' products from 'list1'
-      list1.RemoveAll(prod => prod.Color == "Black");
-      // Remove 'red' products from 'list2'
-      list2.RemoveAll(prod => prod.Color == "Red");
 
       // Write Query Syntax Here
       list = (from prod in list1
               select prod)
-              .Intersect(list2, pc).ToList();
+              .UnionBy(list2, p => p.Color)
+              .OrderBy(p => p.Name).ToList();
 
       return list;
     }
     #endregion
 
-    #region IntersectUsingComparerMethod
+    #region UnionByMethod
     /// <summary>
-    /// Intersect() finds all products that are in common between two collections using a comparer class
+    /// UnionBy() combines two lists together using DISTINCT on the property specified. 
     /// </summary>
-    public List<Product> IntersectUsingComparerMethod()
+    public List<Product> UnionByMethod()
     {
       List<Product> list;
-      ProductComparer pc = new();
       // Load all Product Data
       List<Product> list1 = ProductRepository.GetAll();
       // Load all Product Data
       List<Product> list2 = ProductRepository.GetAll();
 
-      // Remove 'black' products from 'list1'
-      list1.RemoveAll(prod => prod.Color == "Black");
-      // Remove 'red' products from 'list2'
-      list2.RemoveAll(prod => prod.Color == "Red");
-
       // Write Method Syntax Here
-      list = list1.Intersect(list2, pc).ToList();
+      list = list1.UnionBy(list2, p => p.Color).OrderBy(p => p.Name).ToList();
 
       return list;
     }
     #endregion
 
-    #region IntersectByQuery
+    #region ConcatIntegersQuery
     /// <summary>
-    /// Find products within a collection by comparing a List<string> against a specified property in the collection.
+    /// The Concat() operator combines two lists together and does NOT check for duplicates
+    /// This is like the UNION ALL SQL operator
     /// </summary>
-    public List<Product> IntersectByQuery()
+    public List<int> ConcatIntegersQuery()
     {
-      List<Product> list;
-      List<Product> products = ProductRepository.GetAll();
-
-      // The list of colors to locate in the list
-      List<string> colors = new() { "Red", "Black" };
+      List<int> list;
+      // Create a list of numbers
+      List<int> list1 = new() { 5, 2, 3, 4, 5 };
+      // Create a list of numbers
+      List<int> list2 = new() { 1, 2, 3, 4, 5 };
 
       // Write Query Syntax Here
-      list = (from prod in products
-              select prod)
-              .IntersectBy(colors, p => p.Color).ToList();
+      list = (from num in list1
+              select num)
+              .Concat(list2)
+              .OrderBy(num => num).ToList();
 
       return list;
     }
     #endregion
 
-    #region IntersectByMethod
+    #region ConcatIntegersMethod
     /// <summary>
-    /// IntersectBy() finds DISTINCT products within a collection by comparing a List<string> against a specified property in the collection.
+    /// The Concat() operator combines two lists together and does NOT check for duplicates
+    /// This is like the UNION ALL SQL operator
     /// </summary>
-    public List<Product> IntersectByMethod()
+    public List<int> ConcatIntegersMethod()
     {
-      List<Product> list;
-      List<Product> products = ProductRepository.GetAll();
-
-      // The list of colors to locate in the list
-      List<string> colors = new() { "Red", "Black" };
-
-      // Write Method Syntax Here
-      list = products.IntersectBy(colors, p => p.Color).ToList();
-
-      return list;
-    }
-    #endregion
-
-    #region IntersectByProductSalesQuery
-    /// <summary>
-    /// Find all products that have sales using a 'int' key selector
-    /// Change the default comparer for IntersectBy()
-    /// </summary>
-    public List<Product> IntersectByProductSalesQuery()
-    {
-      List<Product> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+      List<int> list;
+      // Create a list of numbers
+      List<int> list1 = new() { 5, 2, 3, 4, 5 };
+      // Create a list of numbers
+      List<int> list2 = new() { 1, 2, 3, 4, 5 };
 
       // Write Query Syntax Here
-      list = (from prod in products
-              select prod)
-              .IntersectBy<Product, int>(from sale in sales select sale.ProductID, prod => prod.ProductID).ToList();
+      list = list1.Concat(list2)
+              .OrderBy(num => num).ToList();
 
       return list;
     }
     #endregion
 
-    #region IntersectByProductSalesMethod
+    #region ConcatQuery
     /// <summary>
-    /// Find all products that have sales using a 'int' key selector
-    /// Change the default comparer for IntersectBy()
+    /// The Concat() operator combines two lists together and does NOT check for duplicates
+    /// This is like the UNION ALL SQL operator
     /// </summary>
-    public List<Product> IntersectByProductSalesMethod()
+    public List<Product> ConcatQuery()
     {
       List<Product> list;
-      List<Product> products = ProductRepository.GetAll();
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+      // Load all Product Data
+      List<Product> list1 = ProductRepository.GetAll();
+      // Load all Product Data
+      List<Product> list2 = ProductRepository.GetAll();
 
-      // Write Method Syntax Here
-      list = products.IntersectBy<Product, int>(sales.Select(s => s.ProductID), prod => prod.ProductID).ToList();
+      // Write Query Syntax Here
+      list = (from prod in list1
+              select prod)
+              .Concat(list2)
+              .OrderBy(p => p.Name).ToList();
 
       return list;
+    }
+    #endregion
+
+    #region ConcatMethod
+    /// <summary>
+    /// The Concat() operator combines two lists together and does NOT check for duplicates
+    /// This is like the UNION ALL SQL operator
+    /// </summary>
+    public List<Product> ConcatMethod()
+    {
+      List<Product> products;
+      // Load all Product Data
+      List<Product> list1 = ProductRepository.GetAll();
+      // Load all Product Data
+      List<Product> list2 = ProductRepository.GetAll();
+
+      // Write Method Syntax Here
+      products = list1.Concat(list2).OrderBy(p => p.Name).ToList();
+
+      return products;
     }
     #endregion
   }
