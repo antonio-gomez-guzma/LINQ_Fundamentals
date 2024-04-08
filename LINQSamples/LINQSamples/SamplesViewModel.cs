@@ -2,268 +2,218 @@
 {
   public class SamplesViewModel : ViewModelBase
   {
-    #region InnerJoinQuery
+    #region GroupByQuery
     /// <summary>
-    /// Join a Sales Order collection with Products into an anonymous class
-    /// NOTE: This is an equijoin or an inner join
+    /// Group products by Size property. orderby is optional, but generally used
     /// </summary>
-    public List<ProductOrder> InnerJoinQuery()
+    public List<IGrouping<string, Product>> GroupByQuery()
     {
-      List<ProductOrder> list;
+      List<IGrouping<string, Product>> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
       list = (from prod in products
-              join sale in sales
-              on prod.ProductID equals sale.ProductID
-              select new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+              orderby prod.Size
+              group prod by prod.Size).ToList();
 
       return list;
     }
     #endregion
 
-    #region InnerJoinMethod
+    #region GroupByMethod
     /// <summary>
-    /// Join a Sales Order collection with Products into anonymous class
-    /// NOTE: This is an equijoin or an inner join
+    /// Group products by Size property. orderby is optional, but generally used
     /// </summary>
-    public List<ProductOrder> InnerJoinMethod()
+    public List<IGrouping<string, Product>> GroupByMethod()
     {
-      List<ProductOrder> list;
+      List<IGrouping<string, Product>> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      list = products.Join(sales, prod => prod.ProductID,
-              sale => sale.ProductID,
-              (prod, sale) => new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      list = products.OrderBy(p => p.Size).GroupBy(p => p.Size).ToList();
 
       return list;
     }
     #endregion
 
-    #region InnerJoinTwoFieldsQuery
+    #region GroupByUsingKeyQuery
     /// <summary>
-    /// Join a Sales Order collection with Products collection using two fields
+    /// After selecting 'into' new variable, can sort on the 'Key' property. Key property has the value of what you grouped on.
     /// </summary>
-    public List<ProductOrder> InnerJoinTwoFieldsQuery()
+    public List<IGrouping<string, Product>> GroupByUsingKeyQuery()
     {
-      List<ProductOrder> list;
+      List<IGrouping<string, Product>> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
       list = (from prod in products
-              join sale in sales on
-                new { prod.ProductID, Qty = (short)6 }
-                  equals
-                new { sale.ProductID, Qty = sale.OrderQty }
-              select new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+              group prod by prod.Size into sizes
+              orderby sizes.Key
+              select sizes).ToList();
 
       return list;
     }
     #endregion
 
-    #region InnerJoinTwoFieldsMethod
+    #region GroupByUsingKeyMethod
     /// <summary>
-    /// Join a Sales Order collection with Products collection using two fields
+    /// After selecting 'into' new variable, can sort on the 'Key' property. Key property has the value of what you grouped on.
     /// </summary>
-    public List<ProductOrder> InnerJoinTwoFieldsMethod()
+    public List<IGrouping<string, Product>> GroupByUsingKeyMethod()
     {
-      List<ProductOrder> list;
+      List<IGrouping<string, Product>> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      list = products.Join(sales,
-              prod => new { prod.ProductID, Qty = (short)6 },
-              sale => new { sale.ProductID, Qty = sale.OrderQty },
-              (prod, sale) => new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale.SalesOrderID,
-                OrderQty = sale.OrderQty,
-                UnitPrice = sale.UnitPrice,
-                LineTotal = sale.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      list = products.GroupBy(prod => prod.Size)
+                     .OrderBy(sizes => sizes.Key)
+                     .Select(sizes => sizes).ToList();
 
       return list;
     }
     #endregion
 
-    #region JoinIntoQuery
+    #region GroupByWhereQuery
     /// <summary>
-    /// Use 'into' to create a new object with a Sales collection for each Product
-    /// This is like a combination of an inner join and left outer join
-    /// The 'into' keyword allows you to put the sales into a 'sales' variable 
-    /// that can be used to retrieve all sales for a specific product
+    /// Group products by Size property and where the group has more than 2 members
+    /// This simulates a HAVING clause in SQL
     /// </summary>
-    public List<ProductSales> JoinIntoQuery()
+    public List<IGrouping<string, Product>> GroupByWhereQuery()
     {
-      List<ProductSales> list;
+      List<IGrouping<string, Product>> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
       list = (from prod in products
-              orderby prod.ProductID
-              join sale in sales
-              on prod.ProductID equals sale.ProductID
-              into newSales
-              select new ProductSales
+              orderby prod.Size
+              group prod by prod.Size into sizes
+              where sizes.Count() > 2
+              select sizes).ToList();
+
+      return list;
+    }
+    #endregion
+
+    #region GroupByWhereMethod
+    /// <summary>
+    /// Group products by Size property and where the group has more than 2 members
+    /// This simulates a HAVING clause in SQL
+    /// </summary>
+    public List<IGrouping<string, Product>> GroupByWhereMethod()
+    {
+      List<IGrouping<string, Product>> list;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+
+      // Write Method Syntax Here
+      list = products.OrderBy(p => p.Size)
+                     .GroupBy(prod => prod.Size)
+                     .Where(sizes => sizes.Count() > 2)
+                     .Select(sizes => sizes).ToList();
+
+      return list;
+    }
+    #endregion
+
+    #region GroupBySubQueryQuery
+    /// <summary>
+    /// Group Sales by SalesOrderID, add Products into new Sales Order object using a subquery
+    /// </summary>
+    public List<SaleProducts> GroupBySubQueryQuery()
+    {
+      List<SaleProducts> list;
+      // Load all Product Data
+      List<Product> products = ProductRepository.GetAll();
+      // Load all Sales Data
+      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+
+      // Write Query Syntax Here
+      list = (from sale in sales
+              orderby sale.SalesOrderID
+              group sale by sale.SalesOrderID into newSales
+              select new SaleProducts
               {
-                Product = prod,
-                Sales = newSales.OrderBy(s => s.SalesOrderID).ToList()
+                SalesOrderID = newSales.Key,
+                Products = (from prod in products
+                            orderby prod.ProductID
+                            join sale in sales on prod.ProductID equals sale.ProductID
+                            where sale.SalesOrderID == newSales.Key
+                            select prod).ToList()
               }).ToList();
 
       return list;
     }
     #endregion
 
-    #region JoinIntoMethod
+    #region GroupBySubQueryMethod
     /// <summary>
-    /// Use 'into' to create a new object with a Sales collection for each Product
-    /// This is like a combination of an inner join and left outer join
-    /// The GroupJoin() method replaces the into keyword
+    /// Group Sales by SalesOrderID, add Products into new Sales Order object using a subquery
     /// </summary>
-    public List<ProductSales> JoinIntoMethod()
+    public List<SaleProducts> GroupBySubQueryMethod()
     {
-      List<ProductSales> list;
+      List<SaleProducts> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
+      // Load all Sales Data
       List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      list = products.OrderBy(p => p.ProductID).GroupJoin(sales,
-              prod => prod.ProductID,
-              sale => sale.ProductID,
-              (prod, newSales) => new ProductSales
-              {
-                Product = prod,
-                Sales = newSales.OrderBy(s => s.SalesOrderID).ToList()
-              }).ToList();
+      list = sales.OrderBy(s => s.SalesOrderID)
+                  .GroupBy(sale => sale.SalesOrderID)
+                  .Select(newSales => new SaleProducts
+                  {
+                    SalesOrderID = newSales.Key,
+                    Products = products.OrderBy(p => p.ProductID)
+                      .Join(newSales, prod => prod.ProductID,
+                            sale => sale.ProductID,
+                            (prod, sale) => prod).ToList()
+                  }).ToList();
 
       return list;
     }
     #endregion
 
-    #region LeftOuterJoinQuery
+    #region GroupByDistinctQuery
     /// <summary>
-    /// Perform a left join between Products and Sales using DefaultIfEmpty()
+    /// The Distinct() operator can be simulated using the GroupBy() and FirstOrDefault() operators
+    /// In this sample you put distinct product colors into another collection using LINQ
     /// </summary>
-    public List<ProductOrder> LeftOuterJoinQuery()
+    public List<string> GroupByDistinctQuery()
     {
-      List<ProductOrder> list;
+      List<string> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Query Syntax Here
       list = (from prod in products
-              join sale in sales
-              on prod.ProductID equals sale.ProductID
-                into newSales
-              from sale in newSales.DefaultIfEmpty()
-              select new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale?.SalesOrderID,
-                OrderQty = sale?.OrderQty,  // Use the null-conditional operator
-                UnitPrice = sale?.UnitPrice,
-                LineTotal = sale?.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+              orderby prod.Color
+              group prod by prod.Color into groupedColors
+              select groupedColors.FirstOrDefault().Color).ToList();
 
       return list;
     }
     #endregion
 
-    #region LeftOuterJoinMethod
+    #region GroupByDistinctMethod
     /// <summary>
-    /// Perform a left join between Products and Sales using DefaultIfEmpty() and SelectMany()
+    /// The Distinct() operator can be simulated using the GroupBy() and FirstOrDefault() operators
+    /// In this sample you put distinct product colors into another collection using LINQ
     /// </summary>
-    public List<ProductOrder> LeftOuterJoinMethod()
+    public List<string> GroupByDistinctMethod()
     {
-      List<ProductOrder> list;
+      List<string> list;
       // Load all Product Data
       List<Product> products = ProductRepository.GetAll();
-      // Load all Sales Order Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
 
       // Write Method Syntax Here
-      list = products.SelectMany(
-              prod => sales.Where(s => s.ProductID == prod.ProductID).DefaultIfEmpty(),
-              (prod, sale) => new ProductOrder
-              {
-                ProductID = prod.ProductID,
-                Name = prod.Name,
-                Color = prod.Color,
-                StandardCost = prod.StandardCost,
-                ListPrice = prod.ListPrice,
-                Size = prod.Size,
-                SalesOrderID = sale?.SalesOrderID,  // Use the null-conditional operator
-                OrderQty = sale?.OrderQty,
-                UnitPrice = sale?.UnitPrice,
-                LineTotal = sale?.LineTotal
-              }).OrderBy(p => p.Name).ToList();
+      list = products.GroupBy(p => p.Color)
+                      .Select(groupedColors => groupedColors.FirstOrDefault().Color)
+                      .OrderBy(c => c).ToList();
 
       return list;
     }
