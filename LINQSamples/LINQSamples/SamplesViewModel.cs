@@ -82,9 +82,13 @@
       List<Product> list = new();
 
       // Write Query Syntax Here
-     
+      list = (from prod in products
+            orderby prod.Name descending,
+            prod.Name ascending
+            select prod).ToList();
 
-      return list;
+
+            return list;
     }
     #endregion
 
@@ -98,9 +102,11 @@
       List<Product> list = new();
 
       // Write Method Syntax Here
-     
+      list = products.OrderByDescending(prod => prod.Color).ThenBy(prod => prod.Name).ToList();
 
-      return list;
+
+
+            return list;
     }
     #endregion
 
