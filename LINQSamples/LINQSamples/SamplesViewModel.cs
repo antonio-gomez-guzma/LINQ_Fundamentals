@@ -2,336 +2,259 @@
 {
   public class SamplesViewModel : ViewModelBase
   {
-    #region FirstQuery
+    #region TakeQuery
     /// <summary>
-    /// Locate a specific product using First(). First() searches forward in the collection.
-    /// NOTE: First() throws an exception if the result does not produce any values
-    /// Use First() when you know or expect the sequence to have at least one element.
-    /// Exceptions should be exceptional, so try to avoid them.
+    /// Use Take() to select a specified number of items from the beginning of a collection
     /// </summary>
-    public Product FirstQuery()
+    public List<Product> TakeQuery()
     {
       List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Query Syntax Here
-      value = (from prod in products
-               select prod)
-                .First(prod => prod.Color == "Red");
+      list = (from prod in products
+              orderby prod.Name
+              select prod).Take(5).ToList();
+      
 
-      // Test the exception handling
-      //value = (from prod in products
-      //         select prod)
-      //         .First(prod => prod.Color == "purple");
-
-      return value;
+      return list;
     }
     #endregion
 
-    #region FirstMethod
+    #region TakeMethod
     /// <summary>
-    /// Locate a specific product using First(). First() searches forward in the collection.
-    /// NOTE: First() throws an exception if the result does not produce any values
-    /// Use First() when you know or expect the sequence to have at least one element.
-    /// Exceptions should be exceptional, so try to avoid them.
+    /// Use Take() to select a specified number of items from the beginning of a collection
     /// </summary>
-    public Product FirstMethod()
+    public List<Product> TakeMethod()
     {
       List<Product> products = GetProducts();
-      Product value;
-
-      // Write Method Syntax Here
-      value = products.First(prod => prod.Color == "Red");
-
-      return value;
-    }
-    #endregion
-
-    #region FirstOrDefaultQuery
-    /// <summary>
-    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
-    /// NOTE: FirstOrDefault() returns a null if no value is found
-    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
-    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
-    /// </summary>
-    public Product FirstOrDefaultQuery()
-    {
-      List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Query Syntax Here
-      value = (from prod in products
-               select prod)
-               .FirstOrDefault(prod => prod.Color == "Red");
+      list = products.OrderBy(p => p.Name).Take(5).ToList();
+     
 
-      // Test the exception handling
-      //value = (from prod in products
-      //         select prod)
-      //         .FirstOrDefault(prod => prod.Color == "purple");
-
-      return value;
+      return list;
     }
     #endregion
 
-    #region FirstOrDefaultMethod
+    #region TakeRangeQuery
     /// <summary>
-    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
-    /// NOTE: FirstOrDefault() returns a null if no value is found
-    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
-    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
+    /// Use Take() to select a specified number of items from a collection using the Range operator
     /// </summary>
-    public Product FirstOrDefaultMethod()
+    public List<Product> TakeRangeQuery()
     {
       List<Product> products = GetProducts();
-      Product value;
-
-      // Write Method Syntax Here
-      value = products.FirstOrDefault(prod => prod.Color == "Red");
-
-      return value;
-    }
-    #endregion
-
-    #region FirstOrDefaultWithDefaultQuery
-    /// <summary>
-    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
-    /// NOTE: You may specify the return value with FirstOrDefault() if not found
-    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
-    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
-    /// </summary>
-    public Product FirstOrDefaultWithDefaultQuery()
-    {
-      List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Query Syntax Here
-      value = (from prod in products
-               select prod)
-               .FirstOrDefault(prod => prod.Color == "Red",
-                               new Product { ProductID = -1, Name = "PRODUCT NOT FOUND" });
 
-      // Test the exception handling
-      //value = (from prod in products
-      //         select prod)
-      //         .FirstOrDefault(prod => prod.Color == "purple",
-      //                         new Product { ProductID = -1, Name = "PRODUCT NOT FOUND" });
-
-      return value;
+     
+      return list;
     }
     #endregion
 
-    #region FirstOrDefaultWithDefaultMethod
+    #region TakeRangeMethod
     /// <summary>
-    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
-    /// NOTE: You may specify the return value with FirstOrDefault() if not found
-    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
-    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
+    /// Use Take() to select a specified number of items from the beginning of a collection
     /// </summary>
-    public Product FirstOrDefaultWithDefaultMethod()
+    public List<Product> TakeRangeMethod()
     {
       List<Product> products = GetProducts();
-      Product value;
-
-      // Write Method Syntax Here
-      value = products.FirstOrDefault(prod => prod.Color == "Red",
-                                      new Product { ProductID = -1, Name = "NOT FOUND" });
-
-      return value;
-    }
-    #endregion
-
-    #region LastQuery
-    /// <summary>
-    /// Locate a specific product using Last(). Last() searches from the end of the list backwards.
-    /// NOTE: Last returns the last value from a collection, or throws an exception if no value is found
-    /// </summary>
-    public Product LastQuery()
-    {
-      List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Query Syntax Here
-      value = (from prod in products
-               select prod)
-               .Last(prod => prod.Color == "Red");
+      
 
-      // Test the exception handling
-      //value = (from prod in products
-      //         select prod)
-      //         .Last(prod => prod.Color == "purple");
-
-      return value;
+      return list;
     }
     #endregion
 
-    #region LastMethod
+    #region TakeWhileQuery
     /// <summary>
-    /// Locate a specific product using Last(). Last() searches from the end of the list backwards.
-    /// NOTE: Last returns the last value from a collection, or throws an exception if no value is found
+    /// Use TakeWhile() to select a specified number of items from the beginning of a collection based on a true condition
     /// </summary>
-    public Product LastMethod()
+    public List<Product> TakeWhileQuery()
     {
       List<Product> products = GetProducts();
-      Product value;
-
-      // Write Method Syntax Here
-      value = products.Last(prod => prod.Color == "Red");
-
-      return value;
-    }
-    #endregion
-
-    #region LastOrDefaultQuery
-    /// <summary>
-    /// Locate a specific product using LastOrDefault(). LastOrDefault() searches from the end of the list backwards.
-    /// NOTE: LastOrDefault returns the last value in a collection or a null if no values are found
-    /// </summary>
-    public Product LastOrDefaultQuery()
-    {
-      List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Query Syntax Here
-      value = (from prod in products
-               select prod)
-               .LastOrDefault(prod => prod.Color == "Red");
+      
 
-      // Test the exception handling
-      //value = (from prod in products
-      //         select prod)
-      //         .LastOrDefault(prod => prod.Color == "purple");
-
-      return value;
+      return list;
     }
     #endregion
 
-    #region LastOrDefaultMethod
+    #region TakeWhileMethod
     /// <summary>
-    /// Locate a specific product using LastOrDefault(). LastOrDefault() searches from the end of the list backwards.
-    /// NOTE: LastOrDefault returns the last value in a collection or a null if no values are found
+    /// Use TakeWhile() to select a specified number of items from the beginning of a collection based on a true condition
     /// </summary>
-    public Product LastOrDefaultMethod()
+    public List<Product> TakeWhileMethod()
     {
       List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Method Syntax Here
-      value = products.LastOrDefault(prod => prod.Color == "Red");
+     
 
-      return value;
+      return list;
     }
     #endregion
 
-    #region SingleQuery
+    #region SkipQuery
     /// <summary>
-    /// Locate a specific product using Single().
-    /// NOTE: Single() expects only a single element to be found in the collection, otherwise an exception is thrown
-    /// Single() always searches the complete collection
+    /// Use Skip() to move past a specified number of items from the beginning of a collection
     /// </summary>
-    public Product SingleQuery()
+    public List<Product> SkipQuery()
     {
       List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Query Syntax Here
-      value = (from prod in products
-               select prod)
-                .Single(prod => prod.ProductID == 706);
+      
 
-      // Test the exception handling for finding multiple values
-      //value = (from prod in products
-      //         select prod)
-      //         .Single(prod => prod.Color == "Red");
-
-      // Test the exception handling for the list is null
-      //products = null;
-      //value = (from prod in products
-      //         select prod)
-      //         .Single(prod => prod.ProductID == 706);
-
-      return value;
+      return list;
     }
     #endregion
 
-    #region SingleMethod
+    #region SkipMethod
     /// <summary>
-    /// Locate a specific product using Single().
-    /// NOTE: Single() expects only a single element to be found in the collection, otherwise an exception is thrown
-    /// Single() always searches the complete collection
+    /// Use Skip() to move past a specified number of items from the beginning of a collection
     /// </summary>
-    public Product SingleMethod()
+    public List<Product> SkipMethod()
     {
       List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Method Syntax Here
-      value = products.Single(prod => prod.ProductID == 706);
+      
 
-      return value;
+      return list;
     }
     #endregion
 
-    #region SingleOrDefaultQuery
+    #region SkipWhileQuery
     /// <summary>
-    /// Locate a specific product using SingleOrDefault()
-    /// NOTE: SingleOrDefault() returns a single element found in the collection, or a null value if none found in the collection, if multiple values are found an exception is thrown.
-    /// SingleOrDefault() always searches the complete collection
+    /// Use SkipWhile() to move past a specified number of items from the beginning of a collection based on a true condition
     /// </summary>
-    public Product SingleOrDefaultQuery()
+    public List<Product> SkipWhileQuery()
     {
       List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Query Syntax Here
-      value = (from prod in products
-               select prod)
-              .SingleOrDefault(prod => prod.ProductID == 706);
+      
 
-      // Test the exception handling for finding multiple values
-      //value = (from prod in products
-      //         select prod)
-      //         .SingleOrDefault(prod => prod.Color == "Red");
-
-      // Test the exception handling for the list is empty
-      // Returns a 'null'
-      //products.Clear();
-      //value = (from prod in products
-      //         select prod)
-      //         .SingleOrDefault(prod => prod.ProductID == 706);
-
-      // Test the exception handling for the list is empty and a default value is supplied
-      // Returns a Product object
-      //products.Clear();
-      //value = (from prod in products
-      //         select prod)
-      //         .SingleOrDefault(prod => prod.ProductID == 706,
-      //                         new Product { ProductID = -1, Name = "NO PRODUCTS IN THE LIST" });
-
-      // Test the exception handling for the list is null
-      //products = null;
-      //value = (from prod in products
-      //         select prod)
-      //         .SingleOrDefault(prod => prod.ProductID == 706);
-
-      return value;
+      return list;
     }
     #endregion
 
-    #region SingleOrDefaultMethod
+    #region SkipWhileMethod
     /// <summary>
-    /// Locate a specific product using SingleOrDefault()
-    /// NOTE: SingleOrDefault() returns a single element found in the collection, or a null value if none found in the collection, if multiple values are found an exception is thrown.
-    /// SingleOrDefault() always searches the complete collection
+    /// Use SkipWhile() to move past a specified number of items from the beginning of a collection based on a true condition
     /// </summary>
-    public Product SingleOrDefaultMethod()
+    public List<Product> SkipWhileMethod()
     {
       List<Product> products = GetProducts();
-      Product value;
+      List<Product> list = new();
 
       // Write Method Syntax Here
-      value = products.SingleOrDefault(prod => prod.ProductID == 706);
+     
 
-      return value;
+      return list;
+    }
+    #endregion
+
+    #region DistinctQuery
+    /// <summary>
+    /// The Distinct() operator finds all unique values within a collection.
+    /// In this sample you put distinct product colors into another collection using LINQ
+    /// </summary>
+    public List<string> DistinctQuery()
+    {
+      List<Product> products = GetProducts();
+      List<string> list = new();
+
+      // Write Query Syntax Here
+      
+
+      return list;
+    }
+    #endregion
+
+    #region DistinctWhere
+    /// <summary>
+    /// The Distinct() operator finds all unique values within a collection.
+    /// In this sample you put distinct product colors into another collection using LINQ
+    /// </summary>
+    public List<string> DistinctWhere()
+    {
+      List<Product> products = GetProducts();
+      List<string> list = new();
+
+      // Write Method Syntax Here
+      
+
+      return list;
+    }
+    #endregion
+
+    #region DistinctByQuery
+    public List<Product> DistinctByQuery()
+    {
+      List<Product> products = GetProducts();
+      List<Product> list = new();
+
+      // Write Query Syntax Here
+
+
+      return list;
+    }
+    #endregion
+
+    #region DistinctByMethod
+    public List<Product> DistinctByMethod()
+    {
+      List<Product> products = GetProducts();
+      List<Product> list = new();
+
+      // Write Method Syntax Here
+
+
+      return list;
+    }
+    #endregion
+
+    #region ChunkQuery
+    /// <summary>
+    /// Chunk() splits the elements of a larger list into a collection of arrays of a specified size where each element of the collection is an array of those items.
+    /// </summary>
+    public List<Product[]> ChunkQuery()
+    {
+      List<Product> products = GetProducts();
+      List<Product[]> list = new();
+
+      // Write Query Syntax Here
+      
+
+      return list;
+    }
+    #endregion
+
+    #region ChunkMethod
+    /// <summary>
+    /// Chunk() splits the elements of a larger list into a collection of arrays of a specified size where each element of the collection is an array of those items.
+    /// </summary>
+    public List<Product[]> ChunkMethod()
+    {
+      List<Product> products = GetProducts();
+      List<Product[]> list = new();
+
+      // Write Method Syntax Here
+      
+
+      return list;
     }
     #endregion
   }
