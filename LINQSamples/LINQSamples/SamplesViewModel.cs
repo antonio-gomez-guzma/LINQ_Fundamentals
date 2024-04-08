@@ -1,153 +1,233 @@
-﻿namespace LINQSamples {
-  public class SamplesViewModel : ViewModelBase {
-    #region ForEachQuery
+﻿namespace LINQSamples
+{
+  public class SamplesViewModel : ViewModelBase
+  {
+    #region DeferredExecution
     /// <summary>
-    /// ForEach allows you to iterate over a collection to perform assignments within each object.
-    /// Assign the LineTotal from the OrderQty * UnitPrice
-    /// When using the Query syntax, assign the result to a temporary variable.
+    /// Illustrate the concept of LINQ deferred execution using foreach()
     /// </summary>
-    public List<SalesOrder> ForEachQuery() {
-      // Get all Sales Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+    public string DeferredExecution()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
 
-      // Write Query Syntax Here
-      (from sale in sales
-       let tmp = sale.LineTotal = sale.OrderQty * sale.UnitPrice
-       select sale).ToList();
+      // Bring up 'Autos' window in debugger
+      System.Diagnostics.Debugger.Break();
 
-      return sales;
+      // Write LINQ Query Here
+      query = products.Where(p => p.Color == "Red");
+      
+      // Query is executed here
+      //query = query.ToList();
+
+      // Query is executed here
+      foreach (ProductSimple product in query)
+      {
+        Console.WriteLine(product);
+      }
+
+      return "Query Executed";
     }
     #endregion
 
-    #region ForEachMethod
+    #region DeferredExecutionEnumerator
     /// <summary>
-    /// ForEach allows you to iterate over a collection to perform assignments within each object.
-    /// Assign the LineTotal from the OrderQty * UnitPrice
+    /// Illustrate the concept of LINQ deferred execution using GetEnumerator()
     /// </summary>
-    public List<SalesOrder> ForEachMethod() {
-      // Get all Sales Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+    public string DeferredExecutionEnumerator()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
 
-      // Write Method Syntax Here
-      sales.ForEach(sale => sale.LineTotal = sale.OrderQty * sale.UnitPrice);
+      // Bring up 'Autos' window in debugger
+      System.Diagnostics.Debugger.Break();
 
-      return sales;
+      // Write LINQ Query Here
+      query = products.Where(p => p.Color == "Red");
+
+      // The following code is equivalent to the foreach()
+      // Query is executed here
+      IEnumerator<ProductSimple> enumerator = query.GetEnumerator();
+      while (enumerator.MoveNext())
+      {
+        Console.WriteLine(enumerator.Current);
+      }
+
+      return "Query Executed";
     }
     #endregion
 
-    #region ForEachSubQueryQuery
+    #region UsingWhereAndTake
     /// <summary>
-    /// Iterate over each object in the collection and call a sub query to calculate total sales
+    /// Using Where() to filter the collection and adding on Take()
     /// </summary>
-    public List<Product> ForEachSubQueryQuery() {
-      // Get all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Get all Sales Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+    public string UsingWhereAndTake()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
 
-      // Write Query Syntax Here
-      (from prod in products
-       let tmp = prod.TotalSales =
-         sales.Where(sale => sale.ProductID == prod.ProductID).Sum(sale => sale.LineTotal)
-       select prod).ToList();
+      System.Diagnostics.Debugger.Break();
 
-      return products;
+      // Create LINQ query
+      query = products.Where(prod => prod.Color == "Red").Take(1);
+
+      // Query is executed here
+      // All the products are accessed
+      // Only the ones that match the condition are returned
+      // The query stops after the number specified in the Take()
+      foreach (ProductSimple product in query)
+      {
+        Console.WriteLine(product);
+      }
+
+      return "Query Executed";
     }
     #endregion
 
-    #region ForEachSubQueryMethod
+    #region UsingSimpleFilter
     /// <summary>
-    /// Iterate over each object in the collection and call a sub query to calculate total sales
+    /// Create a generic filter to illustrate how NOT to write a filter
+    /// When written this way, the query executes immediately
+    /// Non-Streaming operation
     /// </summary>
-    public List<Product> ForEachSubQueryMethod() {
-      // Get all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Get all Sales Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+    public string UsingSimpleFilter()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
 
-      // Write Method Syntax Here
-      products.ForEach(p => p.TotalSales = sales.Where(sale => sale.ProductID == p.ProductID)
-                  .Sum(sale => sale.LineTotal));
+      System.Diagnostics.Debugger.Break();
 
-      return products;
+      // Create LINQ query
+      // Query is executed here
+      query = products.FilterSimple(prod => prod.Color == "Red");
+
+      foreach (ProductSimple product in query)
+      {
+        Console.WriteLine(product);
+      }
+
+      return "Query Executed";
     }
     #endregion
 
-    #region ForEachQueryCallingMethodQuery
+    #region UsingSimpleFilterAndTake
     /// <summary>
-    /// Iterate over each object in the collection and call a method to set a property.
-    /// This method passes in each Product object into the SalesForProduct() method.
-    /// In the CalculateTotalSalesForProduct() method, the total sales for each Product is calculated.
-    /// The total is placed into each Product objects' TotalSales property.
+    /// Using FilterSimple() to filter the collection and adding on Take()
+    /// Non-Streaming operation
     /// </summary>
-    public List<Product> ForEachQueryCallingMethodQuery() {
-      // Get all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Get all Sales Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+    public string UsingSimpleFilterAndTake()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
 
-      // Write Query Syntax Here
-      var list = (from prod in products
-                  let tmp = prod.TotalSales = CalculateTotalSalesForProduct(prod, sales)      
-                  select prod);
+      System.Diagnostics.Debugger.Break();
 
-       list = list.Where(prod => prod.TotalSales > 0);
+      // Create LINQ query
+      // Query is executed here
+      // All the products are accessed immediately
+      query = products.FilterSimple(prod => prod.Color == "Red").Take(1);
 
-      return list.ToList();
+      // Here is where you get the first product from the query
+      foreach (ProductSimple product in query)
+      {
+        Console.WriteLine(product);
+      }
+
+      return "Query Executed";
     }
     #endregion
 
-    #region CalculateTotalSalesForProduct Method
+    #region UsingYield
     /// <summary>
-    /// Helper method called by LINQ to sum sales for a product
+    /// Using 'yield' to filter the collection
+    /// Streaming operation
     /// </summary>
-    /// <param name="prod">A product</param>
-    /// <returns>Total Sales for Product</returns>
-    private decimal CalculateTotalSalesForProduct(Product prod, List<SalesOrder> sales) {
-      return sales.Where(sale => sale.ProductID == prod.ProductID)
-                  .Sum(sale => sale.LineTotal);
+    public string UsingYield()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
+
+      System.Diagnostics.Debugger.Break();
+
+      // Create LINQ query      
+      query = products.Filter(prod => prod.Color == "Red");
+
+      // Query is executed here
+      // The 'yield' now acts like the Where() operator
+      // All products are accessed,
+      // but only the ones that match the condition are returned
+      foreach (ProductSimple product in query)
+      {
+        Console.WriteLine(product);
+      }
+
+      return "Query Executed";
     }
     #endregion
 
-    #region ForEachQueryCallingMethod
+    #region UsingYieldAndTake
     /// <summary>
-    /// Iterate over each object in the collection and call a method to set a property.
-    /// This method passes in each Product object into the SalesForProduct() method.
-    /// In the CalculateTotalSalesForProduct() method, the total sales for each Product is calculated.
-    /// The total is placed into each Product objects' TotalSales property.
+    /// Using 'yield' to filter the collection and adding on Take()
+    /// Streaming operation
     /// </summary>
-    public List<Product> ForEachQueryCallingMethod() {
-      // Get all Product Data
-      List<Product> products = ProductRepository.GetAll();
-      // Get all Sales Data
-      List<SalesOrder> sales = SalesOrderRepository.GetAll();
+    public string UsingYieldAndTake()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
 
-      // Write Method Syntax Here
-      products.ForEach(p => p.TotalSales = CalculateTotalSalesForProduct(p, sales));
-      products = products.Where(p => p.TotalSales > 0).ToList();
+      System.Diagnostics.Debugger.Break();
 
-      return products;
+      // Create LINQ query
+      query = products.Filter(prod => prod.Color == "Red").Take(1);
+
+      // Query is executed here
+      // You see the products are accessed in order
+      // Only the ones that match the condition are returned
+      // The query stops after the number specified in the Take()
+      foreach (ProductSimple product in query)
+      {
+        Console.WriteLine(product);
+      }
+
+      return "Query Executed";
     }
     #endregion
 
+    #region UsingYieldAndOrderBy
+    /// <summary>
+    /// Adding the OrderBy() forces one complete iteration through collection to sort the data before the filtering can happen
+    /// Non-Streaming operation because of the OrderBy
+    /// </summary>
+    public string UsingYieldAndOrderBy()
+    {
+      IEnumerable<ProductSimple> query;
+      // Load all Product Data
+      List<ProductSimple> products = ProductSimpleRepository.GetAll();
 
+      System.Diagnostics.Debugger.Break();
 
+      // Create LINQ query
+      query = products.Filter(prod => prod.Color == "Red").ToList();
 
+   query = query.OrderBy(prod => prod.Name);
 
+      // Query is executed here
+      // Products are all ordered first
+      // Only the ones that match the condition are returned
+      foreach (ProductSimple product in query)
+      {
+        Console.WriteLine(product);
+      }
 
-
-    #region Extra Example
-    public List<Product> ForEachQueryCalculateNameLength() {
-      List<Product> products = GetProducts();
-      List<Product> list;
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              let tmp = prod.NameLength = prod.Name.Length
-              select prod).ToList();
-
-      return list;
+      return "Query Executed";
     }
-    #endregion
+    #endregion  
   }
 }
