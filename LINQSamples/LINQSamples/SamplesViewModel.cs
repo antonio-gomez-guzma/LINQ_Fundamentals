@@ -2,130 +2,111 @@
 {
   public class SamplesViewModel : ViewModelBase
   {
-    #region OrderByQuery
+    #region WhereQuery
     /// <summary>
-    /// Order products by Name
+    /// Filter products using where. If the data is not found, an empty list is returned
     /// </summary>
-    public List<Product> OrderByQuery()
+    public List<Product> WhereQuery()
     {
       List<Product> products = GetProducts();
       List<Product> list = new();
 
       // Write Query Syntax Here
       list = (from prod in products
-              orderby prod.Name
+              where prod.Name.StartsWith("S")
               select prod).ToList();
+
 
       return list;
     }
     #endregion
 
-    #region OrderByMethod
+    #region WhereMethod
     /// <summary>
-    /// Order products by Name
+    /// Filter products using where. If the data is not found, an empty list is returned
     /// </summary>
-    public List<Product> OrderByMethod()
+    public List<Product> WhereMethod()
     {
       List<Product> products = GetProducts();
       List<Product> list = new();
 
-      // Write Method Syntax Here
-     list = products.OrderBy(prod => prod.Name).ToList();
+            // Write Method Syntax Here
+            list = products.Where(p => p.Name.StartsWith("S")).ToList();
+
 
       return list;
     }
     #endregion
 
-    #region OrderByDescendingQuery Method
+    #region WhereTwoFieldsQuery
     /// <summary>
-    /// Order products by name in descending order
+    /// Filter products using where with two fields. If the data is not found, an empty list is returned
     /// </summary>
-    public List<Product> OrderByDescendingQuery()
+    public List<Product> WhereTwoFieldsQuery()
     {
       List<Product> products = GetProducts();
       List<Product> list = new();
 
             // Write Query Syntax Here
             list = (from prod in products
-                    orderby prod.Name descending
+                    where prod.Name.StartsWith("L") 
+                    && prod.StandardCost > 200
                     select prod).ToList();
-    
 
-      return list;
+
+            return list;
     }
     #endregion
 
-    #region OrderByDescendingMethod Method
+    #region WhereTwoFieldsMethod
     /// <summary>
-    /// Order products by name in descending order
+    /// Filter products using where with two fields. If the data is not found, an empty list is returned
     /// </summary>
-    public List<Product> OrderByDescendingMethod()
+    public List<Product> WhereTwoFieldsMethod()
     {
       List<Product> products = GetProducts();
       List<Product> list = new();
 
-      // Write Method Syntax Here
-      list = products.OrderByDescending(prod => prod.Name).ToList();
+            // Write Method Syntax Here
+            list = products.Where(p => p.Name.StartsWith("L") && p.StandardCost >200).ToList();
 
 
-      return list;
+
+            return list;
     }
     #endregion
 
-    #region OrderByTwoFieldsQuery Method
+    #region WhereExtensionQuery
     /// <summary>
-    /// Order products by Color descending, then Name
+    /// Filter products using a custom extension method
     /// </summary>
-    public List<Product> OrderByTwoFieldsQuery()
+    public List<Product> WhereExtensionQuery()
     {
       List<Product> products = GetProducts();
       List<Product> list = new();
 
       // Write Query Syntax Here
       list = (from prod in products
-            orderby prod.Name descending,
-            prod.Name ascending
-            select prod).ToList();
-
-
-            return list;
-    }
-    #endregion
-
-    #region OrderByTwoFieldsMethod Method
-    /// <summary>
-    /// Order products by Color descending, then Name
-    /// </summary>
-    public List<Product> OrderByTwoFieldsMethod()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-      // Write Method Syntax Here
-      list = products.OrderByDescending(prod => prod.Color).ThenBy(prod => prod.Name).ToList();
-
-
-
-            return list;
-    }
-    #endregion
-
-    #region OrderByTwoFieldsDescMethod Method
-    /// <summary>
-    /// Order products by Color descending, then Name Descending
-    /// </summary>
-    public List<Product> OrderByTwoFieldsDescMethod()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-            // Write Method Syntax Here
-            list = products.OrderByDescending(prod => prod.Color)
-                      .ThenByDescending(prod => prod.Name).ToList();
+              select prod).ByColor("Red").ToList();
 
       return list;
     }
     #endregion
 
+    #region WhereExtensionMethod
+    /// <summary>
+    /// Filter products using a custom extension method
+    /// </summary>
+    public List<Product> WhereExtensionMethod()
+    {
+      List<Product> products = GetProducts();
+      List<Product> list = new();
+
+            // Write Method Syntax Here
+            list = products.ByColor("Red").ToList();
+
+      return list;
+    }
+    #endregion
   }
 }
