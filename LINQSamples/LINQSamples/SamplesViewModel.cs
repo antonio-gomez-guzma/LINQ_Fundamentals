@@ -11,10 +11,7 @@ namespace LINQSamples
     public List<Product> GetAllQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
-
-      // Write Query Syntax Here
-
+      List<Product> list = (from prod in products select prod).ToList();
 
       return list;
     }
@@ -31,6 +28,7 @@ namespace LINQSamples
 
       // Write Method Syntax Here
       
+      list = products.Select(prod => prod).ToList();
 
       return list;
     }
