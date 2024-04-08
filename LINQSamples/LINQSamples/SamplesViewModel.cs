@@ -2,130 +2,103 @@
 {
   public class SamplesViewModel : ViewModelBase
   {
-    #region OrderByQuery
+    #region WhereQuery
     /// <summary>
-    /// Order products by Name
+    /// Filter products using where. If the data is not found, an empty list is returned
     /// </summary>
-    public List<Product> OrderByQuery()
+    public List<Product> WhereQuery()
     {
       List<Product> products = GetProducts();
       List<Product> list = new();
 
       // Write Query Syntax Here
       list = (from prod in products
-              orderby prod.Name
+              where prod.Name.StartsWith("S")
               select prod).ToList();
 
-      return list;
-    }
-    #endregion
-
-    #region OrderByMethod
-    /// <summary>
-    /// Order products by Name
-    /// </summary>
-    public List<Product> OrderByMethod()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-      // Write Method Syntax Here
-     list = products.OrderBy(prod => prod.Name).ToList();
 
       return list;
     }
     #endregion
 
-    #region OrderByDescendingQuery Method
+    #region WhereMethod
     /// <summary>
-    /// Order products by name in descending order
+    /// Filter products using where. If the data is not found, an empty list is returned
     /// </summary>
-    public List<Product> OrderByDescendingQuery()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-            // Write Query Syntax Here
-            list = (from prod in products
-                    orderby prod.Name descending
-                    select prod).ToList();
-    
-
-      return list;
-    }
-    #endregion
-
-    #region OrderByDescendingMethod Method
-    /// <summary>
-    /// Order products by name in descending order
-    /// </summary>
-    public List<Product> OrderByDescendingMethod()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-      // Write Method Syntax Here
-      list = products.OrderByDescending(prod => prod.Name).ToList();
-
-
-      return list;
-    }
-    #endregion
-
-    #region OrderByTwoFieldsQuery Method
-    /// <summary>
-    /// Order products by Color descending, then Name
-    /// </summary>
-    public List<Product> OrderByTwoFieldsQuery()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-      // Write Query Syntax Here
-      list = (from prod in products
-            orderby prod.Name descending,
-            prod.Name ascending
-            select prod).ToList();
-
-
-            return list;
-    }
-    #endregion
-
-    #region OrderByTwoFieldsMethod Method
-    /// <summary>
-    /// Order products by Color descending, then Name
-    /// </summary>
-    public List<Product> OrderByTwoFieldsMethod()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-      // Write Method Syntax Here
-      list = products.OrderByDescending(prod => prod.Color).ThenBy(prod => prod.Name).ToList();
-
-
-
-            return list;
-    }
-    #endregion
-
-    #region OrderByTwoFieldsDescMethod Method
-    /// <summary>
-    /// Order products by Color descending, then Name Descending
-    /// </summary>
-    public List<Product> OrderByTwoFieldsDescMethod()
+    public List<Product> WhereMethod()
     {
       List<Product> products = GetProducts();
       List<Product> list = new();
 
             // Write Method Syntax Here
-            list = products.OrderByDescending(prod => prod.Color)
-                      .ThenByDescending(prod => prod.Name).ToList();
+            list = products.Where(p => p.Name.StartsWith("S")).ToList();
+
 
       return list;
     }
     #endregion
 
+    #region WhereTwoFieldsQuery
+    /// <summary>
+    /// Filter products using where with two fields. If the data is not found, an empty list is returned
+    /// </summary>
+    public List<Product> WhereTwoFieldsQuery()
+    {
+      List<Product> products = GetProducts();
+      List<Product> list = new();
+
+      // Write Query Syntax Here
+
+
+      return list;
+    }
+    #endregion
+
+    #region WhereTwoFieldsMethod
+    /// <summary>
+    /// Filter products using where with two fields. If the data is not found, an empty list is returned
+    /// </summary>
+    public List<Product> WhereTwoFieldsMethod()
+    {
+      List<Product> products = GetProducts();
+      List<Product> list = new();
+
+      // Write Method Syntax Here
+
+
+      return list;
+    }
+    #endregion
+
+    #region WhereExtensionQuery
+    /// <summary>
+    /// Filter products using a custom extension method
+    /// </summary>
+    public List<Product> WhereExtensionQuery()
+    {
+      List<Product> products = GetProducts();
+      List<Product> list = new();
+
+      // Write Query Syntax Here
+
+      return list;
+    }
+    #endregion
+
+    #region WhereExtensionMethod
+    /// <summary>
+    /// Filter products using a custom extension method
+    /// </summary>
+    public List<Product> WhereExtensionMethod()
+    {
+      List<Product> products = GetProducts();
+      List<Product> list = new();
+
+      // Write Method Syntax Here
+
+
+      return list;
+    }
+    #endregion
   }
 }
