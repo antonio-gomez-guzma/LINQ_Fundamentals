@@ -2,110 +2,275 @@
 {
   public class SamplesViewModel : ViewModelBase
   {
-    #region WhereQuery
+    #region FirstQuery
     /// <summary>
-    /// Filter products using where. If the data is not found, an empty list is returned
+    /// Locate a specific product using First(). First() searches forward in the collection.
+    /// NOTE: First() throws an exception if the result does not produce any values
+    /// Use First() when you know or expect the sequence to have at least one element.
+    /// Exceptions should be exceptional, so try to avoid them.
     /// </summary>
-    public List<Product> WhereQuery()
+    public Product FirstQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
-
-      // Write Query Syntax Here
-      list = (from prod in products
-              where prod.Name.StartsWith("S")
-              select prod).ToList();
-
-
-      return list;
-    }
-    #endregion
-
-    #region WhereMethod
-    /// <summary>
-    /// Filter products using where. If the data is not found, an empty list is returned
-    /// </summary>
-    public List<Product> WhereMethod()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
-
-            // Write Method Syntax Here
-            list = products.Where(p => p.Name.StartsWith("S")).ToList();
-
-
-      return list;
-    }
-    #endregion
-
-    #region WhereTwoFieldsQuery
-    /// <summary>
-    /// Filter products using where with two fields. If the data is not found, an empty list is returned
-    /// </summary>
-    public List<Product> WhereTwoFieldsQuery()
-    {
-      List<Product> products = GetProducts();
-      List<Product> list = new();
+      Product value = null;
 
             // Write Query Syntax Here
-            list = (from prod in products
-                    where prod.Name.StartsWith("L") 
-                    && prod.StandardCost > 200
-                    select prod).ToList();
+            value = (from prod in products select prod)
+                      .First(prod => prod.Color == "purple");
+            
+      // Test the exception handling
 
-
-            return list;
+      return value;
     }
     #endregion
 
-    #region WhereTwoFieldsMethod
+    #region FirstMethod
     /// <summary>
-    /// Filter products using where with two fields. If the data is not found, an empty list is returned
+    /// Locate a specific product using First(). First() searches forward in the collection.
+    /// NOTE: First() throws an exception if the result does not produce any values
+    /// Use First() when you know or expect the sequence to have at least one element.
+    /// Exceptions should be exceptional, so try to avoid them.
     /// </summary>
-    public List<Product> WhereTwoFieldsMethod()
+    public Product FirstMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      Product value = null;
 
-            // Write Method Syntax Here
-            list = products.Where(p => p.Name.StartsWith("L") && p.StandardCost >200).ToList();
-
-
-
-            return list;
+      // Write Method Syntax Here
+      
+      return value;
     }
     #endregion
 
-    #region WhereExtensionQuery
+    #region FirstOrDefaultQuery
     /// <summary>
-    /// Filter products using a custom extension method
+    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
+    /// NOTE: FirstOrDefault() returns a null if no value is found
+    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
+    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
     /// </summary>
-    public List<Product> WhereExtensionQuery()
+    public Product FirstOrDefaultQuery()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      Product value = null;
+
+            // Write Query Syntax Here
+            value = products.First(p => p.Color == "Red");
+
+      // Test the exception handling
+
+      return value;
+    }
+    #endregion
+
+    #region FirstOrDefaultMethod
+    /// <summary>
+    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
+    /// NOTE: FirstOrDefault() returns a null if no value is found
+    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
+    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
+    /// </summary>
+    public Product FirstOrDefaultMethod()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Method Syntax Here
+
+      return value;
+    }
+    #endregion
+
+    #region FirstOrDefaultWithDefaultQuery
+    /// <summary>
+    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
+    /// NOTE: You may specify the return value with FirstOrDefault() if not found
+    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
+    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
+    /// </summary>
+    public Product FirstOrDefaultWithDefaultQuery()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
 
       // Write Query Syntax Here
-      list = (from prod in products
-              select prod).ByColor("Red").ToList();
-
-      return list;
+     
+      // Test the exception handling
+      
+      return value;
     }
     #endregion
 
-    #region WhereExtensionMethod
+    #region FirstOrDefaultWithDefaultMethod
     /// <summary>
-    /// Filter products using a custom extension method
+    /// Locate a specific product using FirstOrDefault(). FirstOrDefault() searches forward in the list.
+    /// NOTE: You may specify the return value with FirstOrDefault() if not found
+    /// Use FirstOrDefault() when you DON'T know if a collection might have one element you are looking for
+    /// Using FirstOrDefault() avoids throwing an exception which can hurt performance
     /// </summary>
-    public List<Product> WhereExtensionMethod()
+    public Product FirstOrDefaultWithDefaultMethod()
     {
       List<Product> products = GetProducts();
-      List<Product> list = new();
+      Product value = null;
 
-            // Write Method Syntax Here
-            list = products.ByColor("Red").ToList();
+      // Write Method Syntax Here
 
-      return list;
+      return value;
+    }
+    #endregion
+
+    #region LastQuery
+    /// <summary>
+    /// Locate a specific product using Last(). Last() searches from the end of the list backwards.
+    /// NOTE: Last returns the last value from a collection, or throws an exception if no value is found
+    /// </summary>
+    public Product LastQuery()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Query Syntax Here
+      
+      // Test the exception handling
+      
+      return value;
+    }
+    #endregion
+
+    #region LastMethod
+    /// <summary>
+    /// Locate a specific product using Last(). Last() searches from the end of the list backwards.
+    /// NOTE: Last returns the last value from a collection, or throws an exception if no value is found
+    /// </summary>
+    public Product LastMethod()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Method Syntax Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region LastOrDefaultQuery
+    /// <summary>
+    /// Locate a specific product using LastOrDefault(). LastOrDefault() searches from the end of the list backwards.
+    /// NOTE: LastOrDefault returns the last value in a collection or a null if no values are found
+    /// </summary>
+    public Product LastOrDefaultQuery()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Query Syntax Here
+     
+
+      // Test the exception handling
+     
+      return value;
+    }
+    #endregion
+
+    #region LastOrDefaultMethod
+    /// <summary>
+    /// Locate a specific product using LastOrDefault(). LastOrDefault() searches from the end of the list backwards.
+    /// NOTE: LastOrDefault returns the last value in a collection or a null if no values are found
+    /// </summary>
+    public Product LastOrDefaultMethod()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Method Syntax Here
+      
+
+      return value;
+    }
+    #endregion
+
+    #region SingleQuery
+    /// <summary>
+    /// Locate a specific product using Single().
+    /// NOTE: Single() expects only a single element to be found in the collection, otherwise an exception is thrown
+    /// Single() always searches the complete collection
+    /// </summary>
+    public Product SingleQuery()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Query Syntax Here
+
+      // Test the exception handling for finding multiple values
+
+      // Test the exception handling for the list is null
+
+      return value;
+    }
+    #endregion
+
+    #region SingleMethod
+    /// <summary>
+    /// Locate a specific product using Single().
+    /// NOTE: Single() expects only a single element to be found in the collection, otherwise an exception is thrown
+    /// Single() always searches the complete collection
+    /// </summary>
+    public Product SingleMethod()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Method Syntax Here
+
+      return value;
+    }
+    #endregion
+
+    #region SingleOrDefaultQuery
+    /// <summary>
+    /// Locate a specific product using SingleOrDefault()
+    /// NOTE: SingleOrDefault() returns a single element found in the collection, or a null value if none found in the collection, if multiple values are found an exception is thrown.
+    /// SingleOrDefault() always searches the complete collection
+    /// </summary>
+    public Product SingleOrDefaultQuery()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Query Syntax Here
+
+
+      // Test the exception handling for finding multiple values
+
+
+      // Test the exception handling for the list is empty
+
+      // Test the exception handling for the list is empty and a default value is supplied
+
+      // Test the exception handling for the list is null
+     
+
+      return value;
+    }
+    #endregion
+
+    #region SingleOrDefaultMethod
+    /// <summary>
+    /// Locate a specific product using SingleOrDefault()
+    /// NOTE: SingleOrDefault() returns a single element found in the collection, or a null value if none found in the collection, if multiple values are found an exception is thrown.
+    /// SingleOrDefault() always searches the complete collection
+    /// </summary>
+    public Product SingleOrDefaultMethod()
+    {
+      List<Product> products = GetProducts();
+      Product value = null;
+
+      // Write Method Syntax Here
+      
+
+      return value;
     }
     #endregion
   }

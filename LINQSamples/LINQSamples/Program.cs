@@ -4,7 +4,7 @@
 SamplesViewModel vm = new();
 
 // Call Sample Method
-var result = vm.WhereExtensionMethod();
+var result = vm.FirstOrDefaultQuery();
 
 // Display Results
 vm.Display(result);
